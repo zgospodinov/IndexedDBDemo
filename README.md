@@ -9,4 +9,4 @@ The module consists of main CRUD methods
 * Delete object
 * Get all objects
 
-Since this Module is being developed with no cloud sync in mind, it enables the user to export/import manually app's data
+Since this Module is being developed with no cloud sync in mind, the module provides the user capabilities to export/import manually app's data
