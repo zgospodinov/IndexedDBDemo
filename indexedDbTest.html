@@ -83,6 +83,9 @@
             if ('files' in x) {
                 IDbManager.importDb(file = x.files[0]);
             }
+        };
+        function clearDb() {
+            IDbManager.clearDb();
         }
     </script>
 </body>

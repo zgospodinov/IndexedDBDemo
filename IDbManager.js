@@ -131,9 +131,6 @@ var IDbManager = (function () {
       }
     },
     clearDb: function () {
-      console.log('deleting')
-      // console.log(db)
-      console.log(window.indexedDB)
       var reqDelete = window.indexedDB.deleteDatabase(dbName)
       location.reload()
     }
