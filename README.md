@@ -1,6 +1,6 @@
 # IndexedDBDemo
 
-IndexedDBDemo represents a simple JavaScript Module.
+#### IndexedDBDemo represents a simple JavaScript Module, that wrapps the IndexedDB API
 
 The module consists of main CRUD methods
 * Create object
