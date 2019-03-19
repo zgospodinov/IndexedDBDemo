@@ -35,19 +35,27 @@
                 <input id="input-file" type="file" onchange="importDb()">
             </div>
             <div style="margin-top:4px;">
-                <button onclick="getProject()">Get</button>
+                <button onclick="getProjects()">Get</button>
                 <button onclick="editProject()">Edit</button>
                 <button onclick="deleteProject()">Delete</button>
+            </div>
+            <div id="data-content">
             </div>
         </div>
     </div>
     <div class="content">
     </div>
     <script>
-        function getProject() {
+        function getProjects() {
             var d = IDbManager.getData();
             d.onsuccess = function (e) {
-                console.log(e.target.result);
+                var res = e.target.result;
+                var content = document.getElementById("data-content");
+                var contString;
+                for (let index = 0; index < res.length; index++) {
+                    const element = res[index];
+                    console.log(element);
+                }
             };
             d.onerror = function () {
                 console.log("Problem while fetching data");
