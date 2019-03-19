@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +10,9 @@
         button {
             padding: 3px;
         }
-
         button {
             margin-right: 4px;
         }
-
         .container {
             display: flex;
             flex-direction: column;
@@ -23,7 +20,6 @@
     </style>
     <script src="IDbManager.js"></script>
 </head>
-
 <body>
     <div style="margin:0 auto;width: 80%;">
         <div class="container">
@@ -48,6 +44,15 @@
     <div class="content">
     </div>
     <script>
+        function getProject() {
+            var d = IDbManager.getData();
+            d.onsuccess = function (e) {
+                console.log(e.target.result);
+            };
+            d.onerror = function () {
+                console.log("Problem while fetching data");
+            }
+        }
         function clearInputs() {
             document.getElementById("project-name").value = "";
             document.getElementById("project-client").value = "";
@@ -89,5 +94,4 @@
         }
     </script>
 </body>
-
 </html>

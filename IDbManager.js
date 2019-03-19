@@ -36,13 +36,7 @@ var IDbManager = (function () {
     getData: function () {
       var tr = db.transaction([storeName], 'readonly')
       var store = tr.objectStore(storeName)
-      //   console.log(store)
-      var requestAll = store.getAll()
-      //   console.log(requestAll)
-
-      requestAll.onsuccess = function (event) {
-        data = event.target.result
-      }
+      return store.getAll();
     },
     exportData: function () {
       //   this.getData()
