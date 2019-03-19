@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +11,11 @@
         button {
             padding: 3px;
         }
+
         button {
             margin-right: 4px;
         }
+
         .container {
             display: flex;
             flex-direction: column;
@@ -20,6 +23,7 @@
     </style>
     <script src="IDbManager.js"></script>
 </head>
+
 <body>
     <div style="margin:0 auto;width: 80%;">
         <div class="container">
@@ -28,11 +32,11 @@
             <input type="date" id="project-start">
             <div style="display:flex; margin-top: 10px;">
                 <button onclick="addProjectTask()">Create</button>
-                <!-- <button onclick="clearDb()">Delete data</button>
-                <button onclick="exportData()">Export data</button> -->
+                <button onclick="clearDb()">Delete data</button>
+                <button onclick="exportData()">Export data</button>
             </div>
             <div style="margin-top:4px;">
-                <!-- <input id="input-file" type="file" onchange="importDb()"> -->
+                <input id="input-file" type="file" onchange="importDb()">
             </div>
             <div style="margin-top:4px;">
                 <button onclick="getProject()">Get</button>
@@ -44,39 +48,43 @@
     <div class="content">
     </div>
     <script>
-        function getProjectInputData(){
+        function clearInputs() {
+            document.getElementById("project-name").value = "";
+            document.getElementById("project-client").value = "";
+            document.getElementById("project-start").value = "";
+        }
+        function getProjectInputData() {
             return {
                 name: document.getElementById("project-name").value,
                 client: document.getElementById("project-client").value,
                 start: document.getElementById("project-start").value
             }
-        }
-
+        };
         function addProjectTask() {
-            // console.log(getProjectInputData());
-            
-            // let projcetName = document.getElementById("project-name");
-            // let projectClient = document.getElementById("project-client");
-            // var startDate = document.getElementById("project-start").value;
-            
-            // var project = {
-            //     name: projcetName.value,
-            //     client: projectClient.value,
-            //     start: startDate
-            // };
-
             IDbManager.addProject(getProjectInputData());
-        }
-        function deleteProject(){
-            IDbManager.deleteProject(2);
-        }
-        function editProject(){
-            var project = {
-                name: projcetName.value,
-                client: projectClient.value,
-                start: startDate
+            clearInputs();
+            // console.log(IDbManager.objectDataAdded);
+        };
+        function deleteProject() {
+            IDbManager.deleteProject(4);
+        };
+        function editProject() {
+            var project = getProjectInputData();
+            project.id = 1;
+            IDbManager.editProject(project);
+            clearInputs();
+        };
+        function exportData() {
+            IDbManager.exportData();
+        };
+        function importDb() {
+            // IDbManager.importDb();
+            var x = document.getElementById('input-file')
+            if ('files' in x) {
+                IDbManager.importDb(file = x.files[0]);
             }
         }
     </script>
 </body>
+
 </html>
