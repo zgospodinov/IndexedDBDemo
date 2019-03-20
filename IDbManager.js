@@ -1,48 +1,59 @@
 var IDbManager = (function () {
-  const dbName = 'ProjectNotesDB'
-  const storeName = 'project-notes'
+  let dbName = 'defaultDb'
+  let storeName = 'default-store'
   window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB
   window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction
   window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange
-  var db, data, proj
   // Main functionality
-  if (!window.indexedDB) {
-    window.alert("Your browser doesn't support a stable version of IndexedDB.")
-  } else {
-    var request = window.indexedDB.open(dbName, 3)
-    request.onupgradeneeded = function (event) {
-      db = event.target.result
-      // console.log(db)
-      if (!db.objectStoreNames.contains(storeName)) {
-        var os = db.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true })
-      // console.log(os)
+  var db, data, proj
+  function initiateDataBase (dbn, dbstoren) {
+    // console.log('initialization of db')
+    if (dbn !== undefined) {
+      dbName = dbn  
+    }
+    if (dbstoren !== undefined) {
+      storeName = dbstoren
+    }
+    if (!window.indexedDB) {
+      window.alert("Your browser doesn't support a stable version of IndexedDB.")
+    } else {
+      var request = window.indexedDB.open(dbName, 3)
+      request.onupgradeneeded = function (event) {
+        db = event.target.result
+        // console.log(db)
+        if (!db.objectStoreNames.contains(storeName)) {
+          var os = db.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true })
+        // console.log(os)
+        }
       }
-    }
-    request.onsuccess = function (event) {
-      // console.log('sucsess')
-      db = event.target.result
-    // console.log(db)
-    // showContent()
-    }
-    request.onerror = function (event) {
-      // DO something
+      request.onsuccess = function (event) {
+        // console.log('sucsess')
+        db = event.target.result
+      // console.log(db)
+      // showContent()
+      }
+      request.onerror = function (event) {
+        // DO something
+      }
     }
   }
   return {
     objectDataAdded: false,
+    initDb: function (IDB_NAME, IDB_STORE_NAME) {
+      initiateDataBase(IDB_NAME, IDB_STORE_NAME)
+    },
     showContent: function () {
       console.log(data)
     },
     getData: function () {
       var tr = db.transaction([storeName], 'readonly')
       var store = tr.objectStore(storeName)
-      return store.getAll();
+      return store.getAll()
     },
     exportData: function () {
       //   this.getData()
       var tr = db.transaction([storeName], 'readonly')
       var store = tr.objectStore(storeName)
-
       var requestAll = store.getAll()
       var idbMan = this
       requestAll.onsuccess = function (event) {
@@ -64,12 +75,10 @@ var IDbManager = (function () {
     },
     importDb: function (file) {
       // console.log(file)
-
       var reader = new FileReader()
       reader.onload = function (e) {
         var content = e.target.result
         var importedData = JSON.parse(content)
-
         var tr = db.transaction([storeName], 'readwrite')
         var store = tr.objectStore(storeName)
         // console.log(store)
@@ -83,7 +92,6 @@ var IDbManager = (function () {
     addProject: function (dataObject) {
       var tr = db.transaction([storeName], 'readwrite')
       var store = tr.objectStore(storeName)
-
       var req = store.add(dataObject)
       // console.log(req)
       req.onsuccess = () => {
@@ -106,7 +114,6 @@ var IDbManager = (function () {
     editProject: function (editedData) {
       var tr = db.transaction([storeName], 'readwrite')
       var store = tr.objectStore(storeName)
-
       store.put(editedData)
     },
     deleteProject: function (id) {

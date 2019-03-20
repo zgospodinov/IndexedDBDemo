@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +11,11 @@
         button {
             padding: 3px;
         }
+
         button {
             margin-right: 4px;
         }
+
         .container {
             display: flex;
             flex-direction: column;
@@ -20,6 +23,7 @@
     </style>
     <script src="IDbManager.js"></script>
 </head>
+
 <body>
     <div style="margin:0 auto;width: 80%;">
         <div class="container">
@@ -46,6 +50,10 @@
     <div class="content">
     </div>
     <script>
+        var idbM = IDbManager;
+        idbM.initDb("NotesDb", "NotesStore");
+
+
         function getProjects() {
             var d = IDbManager.getData();
             d.onsuccess = function (e) {
@@ -74,7 +82,8 @@
             }
         };
         function addProjectTask() {
-            IDbManager.addProject(getProjectInputData());
+            // IDbManager.addProject(getProjectInputData());
+            idbM.addProject(getProjectInputData());
             clearInputs();
             // console.log(IDbManager.objectDataAdded);
         };
@@ -83,7 +92,7 @@
         };
         function editProject() {
             var project = getProjectInputData();
-            project.id = 1;
+            project.id = 5;
             IDbManager.editProject(project);
             clearInputs();
         };
@@ -102,4 +111,5 @@
         }
     </script>
 </body>
+
 </html>
